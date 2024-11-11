@@ -2,18 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
-// import helmet from 'helmet';
 
-import TTS from './routes/tts';
-import File from './routes/file';
-import Files from './routes/files';
+import Test from './routes/test';
 
-const PORT = process.env.PORT || 8000;
-
+const PORT   = process.env.PORT || 8000;
 const server = express();
-
 server.use(morgan('dev'));
 server.use(cors());
+
+//import helmet from 'helmet';
 // server.use(
 //   helmet({
 //     contentSecurityPolicy: {
@@ -30,11 +27,9 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(express.static(path.join(__dirname, '../public')));
 
-console.log('Dir: ', path.join(__dirname, '../public'));
+//Set the route paths
+server.use('/api/v1/test', Test);
 
-server.use('/api/v1/files', Files);
-server.use('/api/v1/file', File);
-server.use('/api/v1/tts', TTS);
 
 server.listen(PORT, () =>
   console.log(`Server running on: http://localhost:${PORT}`)
